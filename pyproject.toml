@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "easy45"
+version = "0.1.0"
+description = "Assembly-free recovery of the 45S nrDNA transcribed unit and ribotype variants from HiFi long reads"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "Trinh H. Vu", email = "maidinhvn@users.noreply.github.com" }]
+keywords = ["nrDNA", "45S", "ribotype", "HiFi", "PacBio", "rDNA", "barcoding", "phylogenetics"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+# Keep pip dependencies minimal. All heavy bioinformatics tools
+# (minimap2, seqkit, vsearch, ITSx, barrnap, abpoa, infernal)
+# are declared as conda run-dependencies in recipe/meta.yaml, NOT here.
+dependencies = [
+    "biopython>=1.79",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+easy45 = "easy45.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+easy45 = ["data/*.fasta", "data/*.cm"]

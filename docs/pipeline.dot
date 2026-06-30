@@ -1,0 +1,69 @@
+// easy45 pipeline — render: dot -Tpng docs/pipeline.dot -o docs/pipeline.png
+//                            dot -Tsvg docs/pipeline.dot -o docs/pipeline.svg
+digraph easy45 {
+  rankdir=TB;
+  bgcolor="white";
+  graph [fontname="Helvetica", fontsize=12, nodesep=0.35, ranksep=0.45];
+  node  [fontname="Helvetica", fontsize=10];
+  edge  [fontname="Helvetica", fontsize=9, color="#666666"];
+
+  /* ---------- inputs ---------- */
+  subgraph cluster_inputs {
+    label="INPUT"; labeljust="l"; style="dashed"; color="#9aa0a6"; fontsize=11; fontcolor="#5f6368";
+    reads  [label="HiFi reads\n(FASTA/FASTQ)", shape=parallelogram, style=filled, fillcolor="#d2e3fc"];
+    anchor [label="Bundled 45S anchor\nArabidopsis T2T (OR453402)", shape=parallelogram, style=filled, fillcolor="#d2e3fc"];
+    orgref [label="Organelle reference\n(optional)", shape=parallelogram, style=filled, fillcolor="#e8eaed"];
+  }
+
+  /* ---------- pipeline stages ---------- */
+  node [shape=box, style="rounded,filled", fillcolor="#fef7e0", color="#e8a33d"];
+  s0 [label="S0  Organelle depletion\nminimap2  (optional)"];
+  s1 [label="S1  Recruit rDNA reads\nminimap2 -x map-hifi vs anchor"];
+  s2 [label="S2  Locate 18S / 5.8S / 28S; flag spanning reads\nbarrnap --kingdom euk"];
+  s3 [label="S3  Excise one transcribed unit, orient 18S→26S\ncore (for clustering) + margin (for consensus)"];
+  s4 [label="S4  Coarse cluster of units\nvsearch --cluster_size --id 0.97"];
+  s5 [label="S5  Consensus + mature-boundary trim + ribotype calling\nabpoa  |  cmsearch vs Rfam SSU+LSU  |  variant.py",
+      fillcolor="#fbbc04", color="#b06000", penwidth=2.0];
+  s6 [label="S6  IGS recovery (complete-only, length-binned)\nabpoa within length class"];
+  s7 [label="S7  Annotate + ITS barcode + report\nITSx"];
+
+  /* ---------- main flow ---------- */
+  reads  -> s0;
+  orgref -> s0 [style=dashed];
+  s0 -> s1 [label="reads"];
+  anchor -> s1;
+  s1 -> s2 [label="recruited reads (rDNA)"];
+  s2 -> s3 [label="per-read gene coords"];
+  s3 -> s4 [label="core units"];
+  s3 -> s5 [label="margin units", style=dashed];
+  s4 -> s5 [label="clusters + freq"];
+  s2 -> s6 [label="reads spanning\n26S → next 18S", style=dashed];
+  s5 -> s7;
+  s6 -> s7 [style=invis];   // layout only
+
+  /* ---------- ribotype classification note (the scientific core) ---------- */
+  vclass [shape=note, style=filled, fillcolor="#fce8e6", color="#c5221f", fontsize=9,
+          label="variant.py (vs primary):\l  variant  = real subs, ≥ 90% id  → kept\l  noise    = homopolymer/STR indels  → dropped\l  foreign  = < 90% id (e.g. endophyte)  → excluded\l"];
+  s5 -> vclass [style=dotted, arrowhead=none, color="#c5221f"];
+
+  /* ---------- outputs ---------- */
+  subgraph cluster_outputs {
+    label="OUTPUT"; labeljust="l"; style="dashed"; color="#9aa0a6"; fontsize=11; fontcolor="#5f6368";
+    node [shape=note, style=filled, fillcolor="#e6f4ea", color="#34a853"];
+    o_cons [label="consensus.fasta\n(primary ribotype, 18S–26S)"];
+    o_var  [label="variants.fasta\n(hybrid / allopolyploid signal)"];
+    o_its  [label="its.fasta + its_parts.fasta\n(ITS barcode)"];
+    o_igs  [label="igs.fasta"];
+    o_gff  [label="annotation.gff3"];
+    o_rib  [label="ribotypes.tsv\n(freq; foreign flagged)"];
+    o_rep  [label="report.txt"];
+  }
+
+  s5 -> o_cons;
+  s5 -> o_var;
+  s5 -> o_rib;
+  s6 -> o_igs;
+  s7 -> o_its;
+  s7 -> o_gff;
+  s7 -> o_rep;
+}
