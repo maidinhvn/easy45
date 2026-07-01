@@ -1,0 +1,20 @@
+name: easy45
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.9
+  - biopython>=1.79
+  # external bioinformatics tools (invoked via subprocess) ---------------
+  - minimap2
+  - seqkit
+  - vsearch
+  - itsx
+  - barrnap
+  - abpoa
+  - infernal      # cmsearch: CM-based mature-boundary trim (S5)
+  # dev ------------------------------------------------------------------
+  - pytest
+  - pip
+  - pip:
+      - -e .
