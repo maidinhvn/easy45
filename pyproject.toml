@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "easy45"
-version = "0.1.0"
+version = "0.2.0"
 description = "Assembly-free recovery of the 45S nrDNA transcribed unit and ribotype variants from HiFi long reads"
 readme = "README.md"
 license = { text = "MIT" }

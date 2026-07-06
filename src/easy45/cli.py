@@ -7,6 +7,7 @@ import logging
 import sys
 
 from . import __version__
+from .batch import run_batch
 from .config import Config
 from .external import DependencyError, check_dependencies
 from .pipeline import run_pipeline
@@ -39,6 +40,28 @@ def _build_parser() -> argparse.ArgumentParser:
     r.add_argument("--no-igs", action="store_true", help="skip IGS recovery")
     r.add_argument("--no-resume", action="store_true", help="ignore previous run state")
     r.add_argument("-v", "--verbose", action="store_true")
+
+    # --- batch --------------------------------------------------------------
+    b = sub.add_parser("batch", help="run over every sample in a folder "
+                                     "(one HiFi file per sample, flat or one "
+                                     "subfolder per sample)")
+    b.add_argument("-i", "--indir", required=True,
+                   help="folder of HiFi read files (flat and/or subfolders)")
+    b.add_argument("-o", "--outdir", default="easy45_batch",
+                   help="output root; each sample -> outdir/<sample>/")
+    b.add_argument("-a", "--anchor-ref", default=None,
+                   help="45S anchor (default: bundled Arabidopsis T2T 45S unit)")
+    b.add_argument("-r", "--organelle-ref", default=None,
+                   help="plastid+mito genomes for Stage 0 depletion (recommended)")
+    b.add_argument("-t", "--threads", type=int, default=4)
+    b.add_argument("--recruit-min-matchlen", type=int, default=300)
+    b.add_argument("--cluster-id", type=float, default=0.97)
+    b.add_argument("--min-reads", type=int, default=5)
+    b.add_argument("--min-freq", type=float, default=0.05)
+    b.add_argument("--no-igs", action="store_true", help="skip IGS recovery")
+    b.add_argument("--no-resume", action="store_true",
+                   help="re-run samples even if their consensus already exists")
+    b.add_argument("-v", "--verbose", action="store_true")
 
     # --- check-deps ---------------------------------------------------------
     c = sub.add_parser("check-deps", help="verify external tools are installed")
@@ -92,6 +115,15 @@ def main(argv: list[str] | None = None) -> int:
         )
         run_pipeline(config)
         return 0
+
+    if args.command == "batch":
+        _setup_logging(args.verbose)
+        try:
+            check_dependencies()
+        except DependencyError as e:
+            print(e, file=sys.stderr)
+            return 1
+        return run_batch(args)
 
     return 1
 

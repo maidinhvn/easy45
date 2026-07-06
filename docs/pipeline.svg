@@ -42,9 +42,10 @@
 <!-- anchor -->
 <g id="node2" class="node">
 <title>anchor</title>
-<polygon fill="#d2e3fc" stroke="black" points="1196.7,-916 810.62,-916 711.3,-832 1097.38,-832 1196.7,-916"/>
-<text text-anchor="middle" x="954" y="-879" font-family="Helvetica,sans-Serif" font-size="15.00">Bundled 45S anchor</text>
-<text text-anchor="middle" x="954" y="-862" font-family="Helvetica,sans-Serif" font-size="15.00">Arabidopsis T2T (OR453402)</text>
+<polygon fill="#d2e3fc" stroke="black" points="1196.7,-912 810.62,-912 711.3,-836 1097.38,-836 1196.7,-912"/>
+<text text-anchor="start" x="877" y="-878" font-family="Helvetica,sans-Serif" font-size="15.00">Bundled 45S anchor</text>
+<text text-anchor="start" x="845" y="-863" font-family="Helvetica,sans-Serif" font-style="italic" font-size="15.00">Arabidopsis</text>
+<text text-anchor="start" x="933" y="-863" font-family="Helvetica,sans-Serif" font-size="15.00"> T2T (OR453402)</text>
 </g>
 <!-- s1 -->
 <g id="node5" class="node">
@@ -56,8 +57,8 @@
 <!-- anchor&#45;&gt;s1 -->
 <g id="edge4" class="edge">
 <title>anchor&#45;&gt;s1</title>
-<path fill="none" stroke="#c77800" stroke-width="1.6" d="M940.6,-831.81C927.64,-791.95 908.3,-732.49 896.74,-696.95"/>
-<polygon fill="#c77800" stroke="#c77800" stroke-width="1.6" points="899.98,-695.59 893.56,-687.16 893.32,-697.75 899.98,-695.59"/>
+<path fill="none" stroke="#c77800" stroke-width="1.6" d="M941.87,-835.69C928.91,-795.85 908.62,-733.48 896.69,-696.79"/>
+<polygon fill="#c77800" stroke="#c77800" stroke-width="1.6" points="899.98,-695.58 893.56,-687.16 893.32,-697.75 899.98,-695.58"/>
 </g>
 <!-- orgref -->
 <g id="node3" class="node">

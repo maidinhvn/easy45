@@ -14,7 +14,7 @@ source:
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --no-cache-dir
   run_exports:
     - {{ pin_subpackage(name, max_pin="x") }}
   entry_points:
@@ -22,11 +22,11 @@ build:
 
 requirements:
   host:
-    - python >=3.9
+    - python
     - pip
     - setuptools >=64
   run:
-    - python >=3.9
+    - python
     - biopython >=1.79
     # external tools invoked via subprocess
     - minimap2

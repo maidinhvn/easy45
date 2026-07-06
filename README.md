@@ -63,6 +63,21 @@ easy45 run -i reads.fastq.gz -o results/ -r plastid_mito.fasta -t 16
 
 Run `easy45 run --help` for all parameters.
 
+### Batch mode
+
+Process a whole folder of HiFi samples in one command — ideal for an overnight run:
+
+```bash
+easy45 batch -i hifi_folder/ -o out/ -t 16
+```
+
+`batch` auto-detects the layout: one HiFi read file per sample in a flat folder
+and/or one subfolder per sample (a HiFi-named file is preferred when a subfolder
+holds several files). Each sample is written to `out/<sample>/`; a failed sample is
+logged and skipped, samples already done are skipped (so an interrupted run just
+re-launches), and a `batch_summary.tsv` aggregates every sample's consensus length,
+ribotype count, ITS/IGS lengths and timing. All `run` options (`-t`, `-r`, …) apply.
+
 ## Citation
 
 If you use easy45, please cite the manuscript (in preparation) and the archived

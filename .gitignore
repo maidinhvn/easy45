@@ -16,3 +16,10 @@ bench/*.log
 # keep packaged reference data (anchor + CMs) — NOT ignored:
 !src/easy45/data/
 bench/ident/
+
+# benchmark tool comparison intermediates (heavy) — keep only small result files
+bench/getorganelle/
+bench/ribotin/
+
+# raw BLAST dumps (transient)
+results_45S/its_blast*.txt

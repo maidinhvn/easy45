@@ -11,7 +11,7 @@ digraph easy45 {
   subgraph cluster_inputs {
     label="INPUT"; labeljust="l"; style="dashed"; color="#9aa0a6"; fontsize=15; fontcolor="#5f6368";
     reads  [label="HiFi reads\n(FASTA/FASTQ)", shape=parallelogram, style=filled, fillcolor="#d2e3fc"];
-    anchor [label="Bundled 45S anchor\nArabidopsis T2T (OR453402)", shape=parallelogram, style=filled, fillcolor="#d2e3fc"];
+    anchor [label=<Bundled 45S anchor<BR/><I>Arabidopsis</I> T2T (OR453402)>, shape=parallelogram, style=filled, fillcolor="#d2e3fc"];
     orgref [label="Organelle reference\n(optional)", shape=parallelogram, style=filled, fillcolor="#e8eaed"];
   }
 

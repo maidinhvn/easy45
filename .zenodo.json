@@ -1,0 +1,21 @@
+{
+  "title": "easy45: assembly-free recovery of the 45S nrDNA transcribed unit and ribotype diversity from PacBio HiFi reads",
+  "description": "Pure-Python tool that recruits spanning PacBio HiFi reads and reconstructs the mature 45S nrDNA transcribed unit (18S-ITS1-5.8S-ITS2-26S), ITS barcode and phased intragenomic ribotypes without genome assembly, treating each spanning read as one molecule. Long-read counterpart of ngs45 (Illumina).",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Vu, Trinh H.",
+      "affiliation": "Seoul National University, Seoul, Republic of Korea; An Giang University, Vietnam National University Ho Chi Minh City, An Giang, Vietnam",
+      "orcid": "0000-0001-8178-0800"
+    }
+  ],
+  "keywords": [
+    "45S nrDNA",
+    "ITS barcode",
+    "ribotype",
+    "PacBio HiFi",
+    "plant barcoding",
+    "phylogenetics"
+  ]
+}

@@ -7,11 +7,12 @@ authors:
   - family-names: Vu
     given-names: "Trinh H."
     orcid: "https://orcid.org/0000-0001-8178-0800"
-    affiliation: "Seoul National University, Seoul, Republic of Korea"
+    email: "thvu@agu.edu.vn"
+    affiliation: "Seoul National University, Seoul, Republic of Korea; An Giang University, Vietnam National University Ho Chi Minh City, An Giang, Vietnam"
 license: MIT
 repository-code: "https://github.com/maidinhvn/easy45"
 url: "https://github.com/maidinhvn/easy45"
-version: 0.1.0
+version: 0.2.0
 keywords:
   - 45S nrDNA
   - ITS barcode
