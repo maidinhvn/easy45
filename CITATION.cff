@@ -4,8 +4,8 @@ title: easy45
 abstract: "Assembly-free recovery of the 45S nuclear ribosomal DNA transcribed unit and ribotype diversity from PacBio HiFi reads."
 type: software
 authors:
-  - family-names: Vu
-    given-names: "Trinh H."
+  - family-names: Trinh
+    given-names: "Hoai Vu"
     orcid: "https://orcid.org/0000-0001-8178-0800"
     email: "maidinhvn@users.noreply.github.com"
     affiliation: "Seoul National University, Seoul, Republic of Korea; An Giang University, Vietnam National University Ho Chi Minh City, An Giang, Vietnam"
