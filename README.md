@@ -1,5 +1,8 @@
 # easy45
 
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://anaconda.org/bioconda/easy45)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **Assembly-free recovery of the 45S nrDNA transcribed unit and ribotype variants from HiFi long reads.**
 
 easy45 recruits HiFi reads that span a full 45S nrDNA transcribed unit
@@ -28,14 +31,24 @@ ribotype calling → IGS → annotate + ITS barcode (ITSx). See
 
 ## Install
 
+### From bioconda (recommended)
+
+```bash
+conda install -c bioconda easy45
+# or, faster:
+mamba install -c bioconda easy45
+```
+
+That's it — all external tools (minimap2, seqkit, vsearch, ITSx, barrnap, abpoa,
+infernal) are pulled in automatically; the Python package itself stays pure-Python.
+
+### From source (development)
+
 ```bash
 conda env create -f environment.yml
 conda activate easy45
 easy45 check-deps
 ```
-
-All heavy tools (minimap2, seqkit, vsearch, ITSx, barrnap, abpoa, infernal) are
-conda dependencies — the Python package itself stays pure-Python.
 
 ## Usage
 
@@ -71,12 +84,26 @@ Process a whole folder of HiFi samples in one command — ideal for an overnight
 easy45 batch -i hifi_folder/ -o out/ -t 16
 ```
 
-`batch` auto-detects the layout: one HiFi read file per sample in a flat folder
-and/or one subfolder per sample (a HiFi-named file is preferred when a subfolder
-holds several files). Each sample is written to `out/<sample>/`; a failed sample is
-logged and skipped, samples already done are skipped (so an interrupted run just
-re-launches), and a `batch_summary.tsv` aggregates every sample's consensus length,
-ribotype count, ITS/IGS lengths and timing. All `run` options (`-t`, `-r`, …) apply.
+`batch` auto-detects either input layout (you can even mix them in one folder):
+
+```
+# flat — sample name = file name        # subfolder — sample name = folder name
+hifi_folder/                            hifi_folder/
+├── sampleA.hifi.fastq.gz               ├── sampleA/
+├── sampleB.fastq.gz                    │   └── reads.hifi.fastq.gz
+└── sampleC.fasta                       └── sampleB/
+                                            └── m64.ccs.fastq.gz
+```
+
+(trailing `_hifi`/`_ccs`/`_reads` is stripped from flat file names; when a subfolder
+holds several files a HiFi/CCS-named FASTQ is preferred.)
+
+Each sample is written to `out/<sample>/`. The run is robust for long jobs: a failed
+sample is logged and skipped (the batch keeps going), and samples already finished
+are skipped on re-launch (resume — pass `--no-resume` to force a redo). A top-level
+**`batch_summary.tsv`** aggregates every sample's consensus length, ribotype/variant
+count, ITS & IGS lengths, timing and status. All `run` options (`-r`, `--cluster-id`,
+…) apply.
 
 ## Citation
 
